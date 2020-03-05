@@ -1,0 +1,30 @@
+{
+    "name": "psg_backend",
+    "version": "0.0.1",
+    "description": "",
+    "author": {
+        "name": "Peter Smith",
+        "email": "peter@smiths.im",
+        "url": "https://github.com/petertonysmith94"
+    },
+    "main": "dist/server.js",
+    "license": "ISC",
+    "scripts": {
+        "start": "NODE_TLS_REJECT_UNAUTHORIZED=0 nodemon -L --exec babel-node src/server.js",
+        "build": "babel src --out-dir dist --source-maps",
+        "serve": "node dist/server.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "lodash": "^4.17.15"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.8.7",
+        "@babel/node": "^7.8.7",
+        "@babel/plugin-proposal-class-properties": "^7.8.3",
+        "@babel/preset-env": "^7.8.7",
+        "babel-plugin-lodash": "^3.3.4",
+        "nodemon": "^2.0.2"
+    }
+}
