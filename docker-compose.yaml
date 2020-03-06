@@ -3,10 +3,34 @@ version: '3.7'
 services:
 
   # API
-  backend:
-    build: ./
+  psg-backend:
     container_name: backend
+    build: ./
     volumes:
       - ./:/app
     ports:
       - '80:80'
+    networks:
+      - psg
+
+  # Database
+  psg-database:
+    container_name: psg-database
+    image: mysql:8.0.19
+    volumes:
+      - ./mysql/youtube.sql:/docker-entrypoint-initdb.d/youtube.sql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_USER : psg
+      MYSQL_PASSWORD : secret
+      MYSQL_ROOT_PASSWORD : secret 
+    networks:
+      - psg
+
+networks:
+  psg:
+    external: false
