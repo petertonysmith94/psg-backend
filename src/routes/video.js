@@ -17,7 +17,7 @@ const store = (request, response) => {
  * @param {*} app 
  */
 const Routes = (app) => {
-  app.route('/video')
+  app.route('/videos')
       .get(index);
 }
 

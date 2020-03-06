@@ -1,8 +1,6 @@
 import express from 'express';
 import Routes from './routes';
 
-// Routes
-
 // Constants
 const PORT = 80;
 const HOST = '0.0.0.0';
