@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   # API
-  psg-backend:
+  backend:
     container_name: backend
     build: ./
     volumes:
@@ -12,10 +12,12 @@ services:
       - '80:80'
     networks:
       - psg
+    depends_on:
+      - database
 
   # Database
-  psg-database:
-    container_name: psg-database
+  database:
+    container_name: database
     image: mysql:8.0.19
     volumes:
       - ./mysql/youtube.sql:/docker-entrypoint-initdb.d/youtube.sql
@@ -33,4 +35,4 @@ services:
 
 networks:
   psg:
-    external: false
+    driver: bridge
