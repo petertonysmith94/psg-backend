@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import generateRoutes from './routes';
 import database from './database';
 
@@ -6,8 +7,9 @@ import database from './database';
 const PORT = 80;
 const HOST = '0.0.0.0';
 
-// Initialise express application
+// Initialises the express application
 const app = express();
+app.use(bodyParser.json());
 
 database.sequelize.sync().then(() => {
   // Register the routes
