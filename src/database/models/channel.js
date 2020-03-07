@@ -1,8 +1,6 @@
-import { DataTypes } from 'sequelize';
-
-module.exports = (sequelize) => {
+const Channel = (sequelize, DataTypes) => {
   // Model definition
-  const Channel = sequelize.define('Channel', {
+  const Channel = sequelize.define('channel', {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -15,6 +13,7 @@ module.exports = (sequelize) => {
       }
     }, {
       tableName: 'channels',
+      timestamps: false,
       indexes: [{
         unique: true,
         fields: ['id']
@@ -24,3 +23,5 @@ module.exports = (sequelize) => {
 
   return Channel;
 }
+
+export default Channel;

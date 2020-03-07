@@ -5,14 +5,18 @@ import generateModels from './models';
 const database = process.env.DATABASE_NAME || 'mydb';
 const username = process.env.DATABASE_USERNAME || 'psg';
 const password = process.env.DATABASE_PASSWORD || 'secret';
-const hostname = process.env.DATABASE_HOST || 'psg-database';
+const host = process.env.DATABASE_HOST || 'database';
 const dialect  = 'mysql';
 
 // Set up the sequelize package
-const sequelize = new Sequelize(database, username, password, {
-  hostname,
+const sequelize = new Sequelize({
+  host,
+  database,
+  username,
+  password,
   dialect,
-  logging: console.log
+  logging: console.log,
+  alter: true             // TODO: remove for production, implement migrations
 });
 
 // Import all our models
