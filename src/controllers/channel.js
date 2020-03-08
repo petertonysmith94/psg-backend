@@ -1,25 +1,8 @@
 import database from '../database';
 import { get, isString } from 'lodash';
 
-class VideoController {
-  prefix = '/videos';
-
-  /**
-   * Performs validation on the incoming request and fails early
-   */
-  validation = (req, res) => {
-    const key = get(req, 'params.video', false);
-    if (! key) {
-      res.status(422).json({ errors: ['A video ID is required'] });
-    }
-    if (! isString(key)) {
-      res.status(422).json({ errors: ['A video ID must be a string'] });
-    }
-
-    return {
-      key
-    };
-  } 
+class ChannelController {
+  prefix = '/channels';
 
   /**
    * Register the routes in the router
@@ -28,28 +11,45 @@ class VideoController {
    */
   routes = (router) => {
     router.get('', this.index);
-    router.get('/:video', this.show);
-    router.delete('/:video', this.delete);
+    router.get('/:channel', this.show);
+    router.delete('/:channel', this.delete);
 
     return router;
   }
 
   /**
-   * Shows all the videos
+   * Performs validation on the incoming request and fails early
+   */
+  validation = (req, res) => {
+    const key = get(req, 'params.channel', false);
+    if (!key) {
+      res.status(422).json({ errors: ['A channel ID is required'] });
+    }
+    if (!isString(key)) {
+      res.status(422).json({ errors: ['A channel ID must be a string'] });
+    }
+
+    return {
+      key
+    };
+  } 
+
+  /**
+   * Shows all the channels
    * 
    * @returns 200   Success
    * @returns 500   An error occured
    */
   index = (req, res) => {
-    // Find all the videos in the database
-    database.models.video
+    // Find all the channels in the database
+    database.models.channel
       .findAll()
       .then(result => res.status(200).json(result))
       .catch(error => res.status(500).json(error));
   }
 
   /**
-   * Show a video resource
+   * Show a channel resource
    * 
    * @returns 200   Successfully found resource
    * @returns 404   Resource not found
@@ -58,8 +58,8 @@ class VideoController {
   show = (req, res) => {
     const { key } = this.validation(req, res)
 
-    // Find a video with the ID supplied
-    database.models.video
+    // Find a channel with the ID supplied
+    database.models.channel
       .findByPk(key)
       .then(result => {
         // Resource can't be found.
@@ -73,7 +73,7 @@ class VideoController {
   }
 
   /**
-   * Delete a video resource
+   * Delete a channel resource
    * 
    * @returns 200   Successfully deleted resource
    * @returns 404   Resource not found
@@ -82,19 +82,19 @@ class VideoController {
   delete = (req, res) => {
     const { key } = this.validation(req, res)
 
-    // Store a video
-    database.models.video
+    // Store a channel
+    database.models.channel
       .destroy({
         where: {
           id: key
         }
       })
       .then(result => {
-        if (!result) res.status(404).json({ errors: ['Unable to delete resource'] });
-        else         res.status(200).json({ message: ['Successfully deleted resource'] });
+        if (!result)  res.status(404).json({ errors: ['Unable to delete resource'] });
+        else          res.status(200).json({ message: ['Successfully deleted resource'] });
       })
       .catch(error => res.status(500).json(error));
   }
 }
 
-export default VideoController;
+export default ChannelController;

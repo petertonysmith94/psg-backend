@@ -1,5 +1,5 @@
 import express from 'express';
-import { ProcessController, VideoController } from '../controllers';
+import { ChannelController, ProcessController, VideoController } from '../controllers';
 
 /**
  * Instantiate any controllers for the application.
@@ -17,6 +17,7 @@ import { ProcessController, VideoController } from '../controllers';
  *      Calling method:     this.testMethod
  */
 const controllers = [
+    new ChannelController(),
     new ProcessController(),
     new VideoController()
 ];

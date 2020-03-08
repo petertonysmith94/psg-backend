@@ -39,10 +39,13 @@ Run the application:
 
 Below you will find all the routes that are defined for this application, all are accessed via the following address: http://localhost.
 
-Method  | Path                    | Description                                               |
-------- | ----------------------- | --------------------------------------------------------- |
-GET     | /videos                 | Fetches all the videos within the database                |
-GET     | /videos?search={terms}  | Fetches all the videos which match the given search term  |
-POST    | /videos                 | Stores video information into the database                |
-GET     | /videos/{video}         | Given an id {video} will fetch a given resource           |
-DELETE  | /videos/{video}         | Given an id {video} will delete a given resource          |
+Method  | Path                    | Description                                                                   |
+------- | ----------------------- | ----------------------------------------------------------------------------- |
+GET     | /channels               | Fetches all the channels within the database                                  |
+GET     | /channels/{channel}     | Given an id {channel} will fetch a given resource                             |
+DELETE  | /channels/{channel}     | Given an id {channel} will delete a given resource                            |
+GET     | /videos                 | Fetches all the videos within the database                                    |
+GET     | /videos/{video}         | Given an id {video} will fetch a given resource                               |
+DELETE  | /videos/{video}         | Given an id {video} will delete a given resource                              |
+POST    | /processes/update       | Stores channel and video data for the given channel names and filter strings  |
+GET     | /search?query={query}   | Searches the database for any title that matches the filter term              |
