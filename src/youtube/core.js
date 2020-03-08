@@ -19,8 +19,6 @@ export const filterOnlyItems = (acc, response) => acc.concat(get(response, 'item
 //#region Fetching methods
 
 export const request = (slug, { ...options } = {}, limit = 1) => {
-  console.log(`Request to ${ slug }, limited to ${ limit } requests`);
-
   // Only allow fetch all when we have a positive limit
   // TODO: implement unlimited calls (limit <= 0)
   if (limit > 1) {
@@ -86,7 +84,6 @@ export const fetchAll = (slug, options = {}, limit = 1) => {
       });
     })
     .then(function recursiveFunction({ n, response, items }) {
-      console.log('Items length', items.length);
       // Appends the result + increments number of requests
       items.push(response);
       n++;
