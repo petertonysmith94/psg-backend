@@ -37,6 +37,7 @@ export const list = (part, query, params = {}, limit = 1) => {
   return  request('/search', {
     params: {
       ...params,
+      maxResults: 50,  // Always fetch the maximum amount of results
       q: query,
       part
     },

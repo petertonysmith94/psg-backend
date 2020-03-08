@@ -1,5 +1,5 @@
 import express from 'express';
-import { VideoController } from '../controllers';
+import { ProcessController, VideoController } from '../controllers';
 
 /**
  * Instantiate any controllers for the application.
@@ -17,6 +17,7 @@ import { VideoController } from '../controllers';
  *      Calling method:     this.testMethod
  */
 const controllers = [
+    new ProcessController(),
     new VideoController()
 ];
 
@@ -25,7 +26,7 @@ const getPrefix = (controller) => {
     return controller.prefix != undefined && typeof(controller.prefix === 'string') ? controller.prefix : '';
 }
 
-// Add all your routes here
+// Adds all the routes to the application here
 const generateRoutes = (app) => {
     var router = express.Router();
 

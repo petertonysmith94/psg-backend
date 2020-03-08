@@ -1,10 +1,9 @@
 /**
- * Fetching
+ * Fetch
  */
-export { default as buildFetch } from './fetch';
-
+export { buildFetch } from './fetch';
 
 /**
- * YouTube
+ * Data
  */
-export { youtube, youtubeAllPages } from './youtube';
+export { flatten } from './data';

@@ -2,9 +2,8 @@ const Video = (sequelize, DataTypes) => {
   // Model definition
   const Video = sequelize.define('video', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true
     },
     title:  DataTypes.STRING(100),

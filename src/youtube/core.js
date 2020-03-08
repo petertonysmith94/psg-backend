@@ -3,16 +3,16 @@ import { get } from 'lodash';
 
 // TODO: ABSTRACT THESE INTO A CONFIG FILE
 const BASE_URL = 'https://www.googleapis.com/youtube/v3';
-const API_KEY = 'AIzaSyBSnwQrSGAEierYx9cxzPpNdmpTT6ohFP8';
+const API_KEY = 'AIzaSyDcd07z5GvhlwZzkR1TAQs81TnjVQJehIw';
 
 //#region Data reducers
 
 /**
  * This reducer can be applied to an array of responses to reduce them to an array request items.
  * 
- * @returns {function} reducer to reduce an array of response to just an array of items.
+ * @returns {array} a flattened array of objects
  */
-export const filterOnlyItems = (acc, response) => acc.concat(get(response, 'items'));
+export const filterOnlyItems = (acc, response) => acc.concat(get(response, 'items', []));
 
 //#endregion
 

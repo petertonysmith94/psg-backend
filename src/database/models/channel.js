@@ -2,9 +2,8 @@ const Channel = (sequelize, DataTypes) => {
   // Model definition
   const Channel = sequelize.define('channel', {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true
       },
       channelName: {

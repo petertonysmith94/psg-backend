@@ -3,9 +3,7 @@ export {
   request,
   fetch,
   fetchAll,
-
-  // Reducers
-  filterOnlyItems,
+  filterOnlyItems
 } from './core';
 
 export {
@@ -26,5 +24,6 @@ export {
 
 export { 
   search as searchVideos,
-  searchQueries as searchVideosQueries
+  searchQueries as searchVideosQueries,
+  fetchVideos
 } from './video';

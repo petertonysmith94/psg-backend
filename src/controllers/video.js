@@ -1,5 +1,5 @@
 import database from '../database';
-import { get } from 'lodash';
+import { get, isString } from 'lodash';
 
 class VideoController {
   prefix = '/videos';
@@ -11,7 +11,6 @@ class VideoController {
    */
   routes = (router) => {
     router.get('', this.index);
-    router.post('', this.store);
     router.get('/:video', this.show);
     router.delete('/:video', this.delete);
 
@@ -33,24 +32,6 @@ class VideoController {
   }
 
   /**
-   * Stores a video resource
-   * TODO: ADD VALIDATION
-   * 
-   * @returns 200   Successfully stored resource
-   * @returns 500   An error occured
-   */
-  store = (req, res) => {
-    // Store a video into the database
-    database.models.video
-      .create({
-        title: get(req, 'body.title', null),
-        date: get(req, 'body.date', null)
-      })
-      .then(result => res.status(200).json(result))
-      .catch(error => res.status(500).json(error));
-  }
-
-  /**
    * Show a video resource
    * 
    * @returns 200   Successfully found resource
@@ -58,17 +39,22 @@ class VideoController {
    * @returns 500   An error occured
    */
   show = (req, res) => {
+    const key = get(req, 'params.video', false);
+    if (!key) {
+      res.status(422).json({ errors: ['A video ID is required'] });
+    }
+    if (!isString(key)) {
+      res.status(422).json({ errors: ['A video ID must be a string'] });
+    }
+
     // Find a video with the ID supplied
     database.models.video
-      .findByPk(
-        get(req, 'params.video', 0)
-      )
+      .findByPk(key)
       .then(result => {
         // Resource can't be found.
         if (null === result) {
           res.status(404).json();
         }
-
         // Successfully found the resource.
         res.status(200).json(result);
       })

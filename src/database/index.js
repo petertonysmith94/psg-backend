@@ -16,7 +16,7 @@ const sequelize = new Sequelize({
   password,
   dialect,
   logging: console.log,
-  alter: true             // TODO: remove for production, implement migrations
+  alter: true,             // TODO: remove for production, implement migrations
 });
 
 // Import all our models
