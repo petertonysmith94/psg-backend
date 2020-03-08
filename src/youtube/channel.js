@@ -1,42 +1,64 @@
-import { youtube } from '../helpers';
+import { request } from './core';
 import { get } from 'lodash';
 
 /**
- * Fetches a raw list of YouTube channels by channel name
- * 
- * @param {string} part 
- * @param {string} channelName 
+ * Useful resources
+ * @see https://developers.google.com/youtube/v3/docs/channels
  */
-export const list = (part, channelName) => {
-  return youtube('/channels', {
+
+/**
+ * Fetches a raw list of YouTube channels by username
+ * @see https://developers.google.com/youtube/v3/docs/channels/list
+ * 
+ * @param {string} part         the YouTube part
+ * @param {string} channelName  a username to filter
+ * @param {string} params       any additional parameters
+ * 
+ * @returns {Promise} the result from the YouTube API call
+ */
+export const list = (part, channelName = null, params = {}) => {
+  return request('/channels', {
     params: {
       part,
-      forUsername: channelName
+      forUsername: channelName,
+      ...params
     }
   })
-  .then(channel => {
+  // Adds the channel name to the response
+  .then(response => {
     return {
-      ...channel,
+      ...response,
       query: channelName
     }
   });
 }
 
 /**
- * Fetches a filtered list of ids and channel names from an array of channel names
+ * Fetches a filtered list of channel ids and channel names from an array of channel names.
+ * TODO: Only uses the first item result at the moment, maybe resolve all the channels?
  * 
- * @param {array} channelNames 
+ * @param {array} channelNames  an array of channel names can be inputted
+ * 
+ * @returns {Promise} 
+ * @returns {array} Format below [
+ *    @returns {string} id            the channel ID
+ *    @returns {string} title         the title of the channel
+ *    @returns {string} channelName   the channel name requested
+ * ]
  */
-export const channels = (channelNames = []) => {
-  return Promise.all(channelNames.map(name => list('snippet', name)))
-    .then(channels => {
-      return channels.filter(channel => channel.pageInfo.totalResults !== 0)
-        .map(channel => {
+export const getChannelsByNames = (channelNames = []) => {
+  // Create promies for finding channels with a given name.
+  return Promise.all( channelNames.map(channelName => list('snippet', channelName)) )
+    .then(
+      // Performs a filter on the responses to only those with results.
+      // Maps each response to fetch the first items id and title
+      responses => responses.filter(response => get(response, 'pageInfo.totalResults', 0) !== 0) // Skips any with no items
+        .map(response => {
           return {
-            id: get(channel, 'items[0].id'),
-            name: get(channel, 'items[0].snippet.title'),
-            query: get(channel, 'query')
+            id: get(response, 'items[0].id'),
+            title: get(response, 'items[0].snippet.title'),
+            channelName: get(response, 'query')
           };
-        });
-    });
+        })
+    );
 }
