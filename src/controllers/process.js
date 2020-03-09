@@ -5,7 +5,7 @@ import {
   buildQuery,
   fetchVideos
 } from '../youtube';
-import { flatten } from '../helpers';
+import { flatten, loadFilters } from '../helpers';
 
 class ProcessController {
   prefix = '/processes';
@@ -23,13 +23,7 @@ class ProcessController {
 
   update = (req, res) => {
     const channelNames = ['globalmtb', 'GlobalCyclingNetwork'];
-    const filters = [
-      'pro',
-      'matt stephens',
-      '5',
-      'Mitchelton-Scott',
-      'Dubai stage'
-    ].map(filter => buildQuery(filter, { onlyTitle: true } ));
+    const filters = loadFilters().map(filter => buildQuery(filter, { onlyTitle: true } ));
 
     // Testing the get channels functionality
     getChannelsByNames(channelNames)

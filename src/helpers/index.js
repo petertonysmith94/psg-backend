@@ -6,4 +6,4 @@ export { buildFetch } from './fetch';
 /**
  * Data
  */
-export { flatten } from './data';
+export { flatten, loadFilters } from './data';
