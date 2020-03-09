@@ -2,24 +2,28 @@ import { search as request, filterOnlyItems } from './index'
 import { get } from 'lodash';
 
 /**
+ * Performs a search with type of video.
  * 
- * @param {*} part 
- * @param {*} options 
+ * @param {string} part 
+ * @param {object} options 
+ * 
+ * @param {Promise}
  */
 export const search = (part, query, limit = 1, options = {}) => 
   request(part, query, { ...options, type: 'video' }, limit);
 
 /**
+ * Creates an array of promies for fetching all videos which match the conditions.
+ *  channels => the channels to look at
+ *  filters => search strings to look for
  * 
+ * @param {string} part 
+ * @param {array} channels 
+ * @param {array} filters 
+ * @param {integer} limit
  * 
- * @param {*} part 
- * @param {*} queries 
- * @param {*} options 
+ * @return {array}
  */
-export const searchQueries = (part, queries = [], limit = 1, options = {}) => 
-  Promise.all(queries.map(query => search(part, query, limit, options)));
-
-
 export const fetchVideos = (part = 'id', channels = [], filters = [], limit = 2) => 
   Promise.all(channels.map(channel => 
     Promise.all(filters.map(filter => 

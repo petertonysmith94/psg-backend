@@ -24,6 +24,17 @@ Clone the repository from Git:
   git clone git@github.com:petertonysmith94/psg-backend.git
 ```
 
+Set up the environmental variables ():
+``` bash
+  cd psg-backend
+  cp .env.example .env
+```
+
+Add a YouTube API v3 enabled API key to .env
+``` text
+  YOUTUBE_API_KEY={ YOUR_API_KEY }
+```
+
 Compile the assets:
 ``` bash
   yarn

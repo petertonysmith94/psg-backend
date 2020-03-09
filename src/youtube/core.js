@@ -1,9 +1,12 @@
 import { buildFetch } from '../helpers';
 import { get } from 'lodash';
 
-// TODO: ABSTRACT THESE INTO A CONFIG FILE
-const BASE_URL = 'https://www.googleapis.com/youtube/v3';
-const API_KEY = 'AIzaSyDcd07z5GvhlwZzkR1TAQs81TnjVQJehIw';
+const BASE_URL = process.env.YOUTUBE_API_URL || 'https://www.googleapis.com/youtube/v3';
+const API_KEY = process.env.YOUTUBE_API_KEY;
+
+if (!API_KEY) {
+  throw Error('The YOUTUBE_API_KEY was not defined in the .env file, this is required!');
+}
 
 //#region Data reducers
 

@@ -4,8 +4,8 @@ import generateRoutes from './routes';
 import database from './database';
 
 // Constants
-const PORT = 80;
-const HOST = '0.0.0.0';
+const PORT = process.env.PORT || 80;
+const HOST = process.env.HOSTNAME || '0.0.0.0';
 
 // Initialises the express application
 const app = express();

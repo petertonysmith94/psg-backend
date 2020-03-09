@@ -17,11 +17,6 @@ const sequelize = new Sequelize({
   dialect,
   logging: console.log,
   alter: true,             // TODO: remove for production, implement migrations
-  operatorsAliases: {
-    $like: Op.like,
-    $not: Op.not,
-    $or: Op.or
-  }
 });
 
 // Import all our models

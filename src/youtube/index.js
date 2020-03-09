@@ -24,6 +24,5 @@ export {
 
 export { 
   search as searchVideos,
-  searchQueries as searchVideosQueries,
   fetchVideos
 } from './video';

@@ -21,12 +21,7 @@ class ProcessController {
     return router;
   }
 
-  /**
-   * 
-   */
-
   update = (req, res) => {
-    // const channelNames = ['GlobalCyclingNetwork', 'globalmtb'];
     const channelNames = ['globalmtb', 'GlobalCyclingNetwork'];
     const filters = [
       'pro',
