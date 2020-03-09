@@ -1,18 +1,17 @@
+import { Sequelize, Op } from 'sequelize';
 import database from '../database';
 import { get, isString } from 'lodash';
 
 class ChannelController {
-  prefix = '/channels';
-
   /**
    * Register the routes in the router
    * 
    * @param Router  express router instance
    */
   routes = (router) => {
-    router.get('', this.index);
-    router.get('/:channel', this.show);
-    router.delete('/:channel', this.delete);
+    router.get('/channels', this.index);
+    router.get('/channels/:channel', this.show);
+    router.delete('/channels/:channel', this.delete);
 
     return router;
   }
@@ -41,9 +40,25 @@ class ChannelController {
    * @returns 500   An error occured
    */
   index = (req, res) => {
+    const query = get(req, 'query.query', undefined);
+
     // Find all the channels in the database
     database.models.channel
-      .findAll()
+      .findAll({
+        where: {
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: `%${ query }%`
+              },
+            }, {
+              channelName: {
+                [Op.like]: `%${ query }%`
+              }
+            }
+          ]
+        }
+      })
       .then(result => res.status(200).json(result))
       .catch(error => res.status(500).json(error));
   }
@@ -56,7 +71,8 @@ class ChannelController {
    * @returns 500   An error occured
    */
   show = (req, res) => {
-    const { key } = this.validation(req, res)
+    const { key } = this.validation(req, res);
+    const query = get(req, 'params.query', undefined);
 
     // Find a channel with the ID supplied
     database.models.channel

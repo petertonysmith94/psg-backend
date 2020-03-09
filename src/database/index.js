@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, Op } from 'sequelize';
 import generateModels from './models';
 
 // Define variables
@@ -17,6 +17,11 @@ const sequelize = new Sequelize({
   dialect,
   logging: console.log,
   alter: true,             // TODO: remove for production, implement migrations
+  operatorsAliases: {
+    $like: Op.like,
+    $not: Op.not,
+    $or: Op.or
+  }
 });
 
 // Import all our models

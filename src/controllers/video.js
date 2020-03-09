@@ -1,9 +1,8 @@
+import { Sequelize, Op } from 'sequelize';
 import database from '../database';
 import { get, isString } from 'lodash';
 
 class VideoController {
-  prefix = '/videos';
-
   /**
    * Performs validation on the incoming request and fails early
    */
@@ -27,9 +26,9 @@ class VideoController {
    * @param Router  express router instance
    */
   routes = (router) => {
-    router.get('', this.index);
-    router.get('/:video', this.show);
-    router.delete('/:video', this.delete);
+    router.get('/videos', this.index);
+    router.get('/videos/:video', this.show);
+    router.delete('/videos/:video', this.delete);
 
     return router;
   }
@@ -41,9 +40,29 @@ class VideoController {
    * @returns 500   An error occured
    */
   index = (req, res) => {
+    const query = get(req, 'query.query', undefined);
+
     // Find all the videos in the database
     database.models.video
-      .findAll()
+      .findAll({
+        where: {
+          [Op.or]: [
+            {
+              id: {
+                [Op.like]: `%${ query }%`
+              },
+            }, {
+              title: {
+                [Op.like]: `%${ query }%`
+              }
+            }, {
+              date: {
+                [Op.like]: `%${ query }%`
+              }
+            }
+          ]
+        }
+      })
       .then(result => res.status(200).json(result))
       .catch(error => res.status(500).json(error));
   }

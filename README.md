@@ -42,10 +42,11 @@ Below you will find all the routes that are defined for this application, all ar
 Method  | Path                    | Description                                                                   |
 ------- | ----------------------- | ----------------------------------------------------------------------------- |
 GET     | /channels               | Fetches all the channels within the database                                  |
+GET     | /channels?query={query} | Searches the database for any channel values that match the {query}           |
 GET     | /channels/{channel}     | Given an id {channel} will fetch a given resource                             |
 DELETE  | /channels/{channel}     | Given an id {channel} will delete a given resource                            |
 GET     | /videos                 | Fetches all the videos within the database                                    |
+GET     | /videos?query={query}   | Searches the database for any video values that match the {query}             |
 GET     | /videos/{video}         | Given an id {video} will fetch a given resource                               |
 DELETE  | /videos/{video}         | Given an id {video} will delete a given resource                              |
 POST    | /processes/update       | Stores channel and video data for the given channel names and filter strings  |
-GET     | /search?query={query}   | Searches the database for any title that matches the filter term              |
