@@ -1,5 +1,5 @@
 import database from '../database';
-import { get } from 'lodash';
+import { get, unescape } from 'lodash';
 import {
   getChannelsByNames,
   buildQuery,

@@ -1,6 +1,7 @@
 import { Sequelize, Op } from 'sequelize';
 import database from '../database';
 import { get, isString } from 'lodash';
+import { buildSearch } from '../helpers';
 
 class ChannelController {
   /**
@@ -46,17 +47,7 @@ class ChannelController {
     database.models.channel
       .findAll({
         where: {
-          [Op.or]: [
-            {
-              id: {
-                [Op.like]: `%${ query }%`
-              },
-            }, {
-              channelName: {
-                [Op.like]: `%${ query }%`
-              }
-            }
-          ]
+          ...buildSearch(database.models.channel, query)
         }
       })
       .then(result => res.status(200).json(result))

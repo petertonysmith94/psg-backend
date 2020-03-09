@@ -1,6 +1,7 @@
 import { Sequelize, Op } from 'sequelize';
 import database from '../database';
 import { get, isString } from 'lodash';
+import { buildSearch } from '../helpers';
 
 class VideoController {
   /**
@@ -40,29 +41,13 @@ class VideoController {
    * @returns 500   An error occured
    */
   index = (req, res) => {
-    const query = get(req, 'query.query', undefined);
+    let query = get(req, 'query.query', false);
 
     // Find all the videos in the database
     database.models.video
       .findAll({
         where: {
-          [Op.or]: [
-            {
-              id: {
-                [Op.like]: `%${ query }%`
-              },
-            },
-            {
-              title: {
-                [Op.like]: `%${ query }%`
-              }
-            },
-            {
-              date: {
-                [Op.like]: `%${ query }%`
-              }
-            }
-          ]
+          ...buildSearch(database.models.video, query)
         }
       })
       .then(result => res.status(200).json(result))
