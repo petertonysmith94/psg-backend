@@ -34,6 +34,10 @@ class ProcessController {
     // Testing the get channels functionality
     getChannelsByNames(channelNames)
       .then(channels => {
+        if (!channels) {
+          throw Error('No channels have been found.');
+        }
+
         // Create the channel in the database if it doesn't exist.
         channels.forEach(channel => {
           database.models.channel

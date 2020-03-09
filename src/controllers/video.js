@@ -51,11 +51,13 @@ class VideoController {
               id: {
                 [Op.like]: `%${ query }%`
               },
-            }, {
+            },
+            {
               title: {
                 [Op.like]: `%${ query }%`
               }
-            }, {
+            },
+            {
               date: {
                 [Op.like]: `%${ query }%`
               }
